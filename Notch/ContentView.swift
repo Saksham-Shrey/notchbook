@@ -16,6 +16,8 @@ struct ContentView: View {
     // SETTINGS
     @AppStorage("notchWidth") private var notchWidth: Double = 700
     @AppStorage("notchHeight") private var notchHeight: Double = 240
+    @AppStorage("restingNotchWidth") private var restingNotchWidth: Double = 100
+    @AppStorage("restingNotchHeight") private var restingNotchHeight: Double = 20
     @AppStorage("showMirror") private var showMirror = true
     // Shortcut visibility toggles (persisted)
     @AppStorage("showFinderShortcut") private var showFinderShortcut: Bool = true
@@ -53,8 +55,8 @@ struct ContentView: View {
                 VStack(spacing: 0) {
                     notchContent
                         .frame(
-                            width: isHovering ? CGFloat(notchWidth) : 180,
-                            height: isHovering ? CGFloat(notchHeight) : 32
+                            width: isHovering ? CGFloat(notchWidth) : restingNotchWidth,
+                            height: isHovering ? CGFloat(notchHeight) : restingNotchHeight
                         )
                         .fixedSize()
                         .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isHovering)
@@ -155,8 +157,8 @@ struct ContentView: View {
                 
                 // HOVER DETECTION LAYER - Only detects in collapsed size
                 Color.clear
-              .frame(width: isHovering ? geometry.size.width : 180, 
-                           height: isHovering ? geometry.size.height : 32)
+              .frame(width: isHovering ? geometry.size.width : restingNotchWidth,
+                           height: isHovering ? geometry.size.height : restingNotchHeight)
                     .contentShape(Rectangle())
                     .allowsHitTesting(false)
                     .onHover { hovering in
